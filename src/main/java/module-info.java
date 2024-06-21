@@ -4,6 +4,6 @@ module com.homework.chatclient {
 
     requires org.controlsfx.controls;
 
-    opens com.homework.chatclient to javafx.fxml;
-    exports com.homework.chatclient;
+    opens hw.app.chatclient to javafx.fxml;
+    exports hw.app.chatclient;
 }

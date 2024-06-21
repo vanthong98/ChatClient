@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="450" prefWidth="600" spacing="10" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hw.app.chatclient.ChatClientController">
+    <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+    </padding>
+    <HBox>
+        <HBox alignment="CENTER_LEFT" prefWidth="250">
+            <Label fx:id="clientNameLabel" style="-fx-font-weight: bold;"/>
+        </HBox>
+        <HBox alignment="CENTER_RIGHT" spacing="5">
+            <Label text="Host" />
+            <TextField fx:id="hostTextbox" prefWidth="100" text="localhost" />
+            <Label text="Port" />
+            <TextField fx:id="portTextBox" prefWidth="50" text="20000" />
+            <Button fx:id="connectButton" text="Connect to server" onAction="#onConnectButtonClick" />
+        </HBox>
+    </HBox>
+    <Separator />
+    <HBox prefHeight="400" spacing="5">
+        <VBox prefWidth="575">
+            <HBox spacing="5">
+                <VBox prefWidth="465" spacing="5">
+                    <Label fx:id="currentReceiverLabel" style="-fx-font-weight: bold;" text="GROUP CHAT" textFill="RED" />
+                    <TextArea fx:id="messageTextArea" prefHeight="325" />
+                    <TextArea fx:id="userMessageTextArea" />
+                    <HBox alignment="CENTER_RIGHT" spacing="5">
+                        <Button fx:id="switchToGroupChatButton" text="Switch to Group chat" onAction="#onSwitchToGroupChatButtonClick"/>
+                        <Button fx:id="sendMessageButton" text="Send message" onAction="#onSendMessageButtonClick" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+        <VBox spacing="5">
+            <Label text="Online Friends" />
+            <ListView fx:id="clientListView" onMouseClicked="#onClientListViewClick" />
+        </VBox>
+    </HBox>
+    <Separator />
+    <VBox>
+        <TextArea fx:id="systemConsoleTextArea" />
+    </VBox>
+</VBox>

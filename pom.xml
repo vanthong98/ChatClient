@@ -64,7 +64,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.homework.chatclient/com.homework.chatclient.HelloApplication</mainClass>
+                            <mainClass>com.homework.chatclient/hw.app.chatclient.ChatClientApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
