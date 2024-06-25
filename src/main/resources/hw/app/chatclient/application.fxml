@@ -29,7 +29,7 @@
                     <TextArea fx:id="messageTextArea" prefHeight="325" />
                     <TextArea fx:id="userMessageTextArea" />
                     <HBox alignment="CENTER_RIGHT" spacing="5">
-                        <Button fx:id="switchToGroupChatButton" text="Switch to Group chat" onAction="#onSwitchToGroupChatButtonClick"/>
+                        <Button fx:id="switchToGroupChatButton" text="Switch to Group chat" onAction="#onSwitchToGroupChatButtonClick" disable="true"/>
                         <Button fx:id="sendMessageButton" text="Send message" onAction="#onSendMessageButtonClick" />
                     </HBox>
                 </VBox>

@@ -19,9 +19,9 @@ public class Mediator {
     public static Dictionary<String, ArrayList<String>> messagesDictionary = new Hashtable<>();
     public static ArrayList<String> groupMessages = new ArrayList<>();
     public static String currentReceiver = "group";
-    public static ObservableList<String> connectedClientNames;
+    public static ObservableList<Client> connectedClientNames;
     public static Label clientNameLabel;
-    public static ListView<String> clientListView;
+    public static ListView<Client> clientListView;
     private static String _clientName;
 
     public static void log(String message) {
@@ -60,6 +60,17 @@ public class Mediator {
             m = "**" + _clientName + "**"  + " [" + getCurrentTime()  + "]" + ":\n" + payload;
         }
 
+        if (!isMyMessage && !currentReceiver.equals(sender)){
+
+
+            connectedClientNames.stream()
+                    .filter(x-> x.name.equals(sender))
+                    .findFirst()
+                    .ifPresent(x-> {
+                        x.hasNewMessage = true;
+                        Platform.runLater(() -> clientListView.refresh());
+                    });
+        }
         if (messages == null) {
             messages = new ArrayList<>();
             messagesDictionary.put(sender, messages);
@@ -96,13 +107,17 @@ public class Mediator {
 
     public static void removeClient(String clientName) {
         Platform.runLater(()-> {
-            connectedClientNames.remove(clientName);
+            connectedClientNames.stream().filter(x-> x.name.equals(clientName))
+                    .findFirst()
+                    .ifPresent(x-> connectedClientNames.remove(x));
         });
     }
 
     public static void addClient(String clientName) {
         Platform.runLater(()-> {
-            connectedClientNames.add(clientName);
+            var client = new Client();
+            client.name = clientName;
+            connectedClientNames.add(client);
         });
     }
 

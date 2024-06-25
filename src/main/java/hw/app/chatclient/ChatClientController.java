@@ -1,6 +1,7 @@
 package hw.app.chatclient;
 
 import hw.app.core.common.MessageType;
+import hw.app.core.main.Client;
 import hw.app.core.main.Mediator;
 import hw.app.core.socket.ClientSocketInputStreamHandler;
 import hw.app.core.socket.ClientSocketOutputStreamHandler;
@@ -10,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -20,7 +22,7 @@ public class ChatClientController {
     public TextField hostTextbox;
     public TextField portTextBox;
     public Button connectButton;
-    public ListView<String> clientListView;
+    public ListView<Client> clientListView;
     public TextArea messageTextArea;
     public TextArea systemConsoleTextArea;
     public TextArea userMessageTextArea;
@@ -45,12 +47,13 @@ public class ChatClientController {
             return;
         }
 
-        ObservableList<String> connectedClientNames = FXCollections.observableArrayList();
+        ObservableList<Client> connectedClientNames = FXCollections.observableArrayList();
 
         Mediator.connectedClientNames = connectedClientNames;
 
         clientListView.setItems(connectedClientNames);
 
+        SetListViewStyle();
         try {
             Mediator.log("Connecting to " + host + ":" + port);
             socket = new Socket(host, Integer.parseInt(port));
@@ -72,14 +75,16 @@ public class ChatClientController {
     }
 
     public void onClientListViewClick(MouseEvent mouseEvent) {
-        var selectedClientName = clientListView.getSelectionModel().getSelectedItem();
+        var selectedClient = clientListView.getSelectionModel().getSelectedItem();
 
-        if (selectedClientName != null) {
-            Mediator.currentReceiver = selectedClientName;
-            currentReceiverLabel.setText("PRIVATE CHAT [" + selectedClientName +"]");
+        if (selectedClient != null) {
+            selectedClient.hasNewMessage = false;
+            Mediator.currentReceiver = selectedClient.name;
+            currentReceiverLabel.setText("PRIVATE CHAT [" + selectedClient.name +"]");
             currentReceiverLabel.setTextFill(Paint.valueOf("#0000FF"));
             Mediator.populateMessages();
             switchToGroupChatButton.setDisable(false);
+            clientListView.refresh();
         }
     }
 
@@ -110,5 +115,26 @@ public class ChatClientController {
             Mediator.savePrivateMessage(Mediator.currentReceiver, message, true);
             Mediator.messages.add(MessageType.PrivateMessage + ";" + Mediator.currentReceiver + ";" + message);
         }
+    }
+
+    private void SetListViewStyle(){
+        clientListView.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<Client> call(ListView<Client> param) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(Client client, boolean empty) {
+                        super.updateItem(client, empty);
+                        if (empty || client == null) {
+                            setText(null);
+                            setStyle("");
+                        } else {
+                            setText(client.name);
+                            setStyle(client.hasNewMessage ? "-fx-font-weight: bold;" : "-fx-font-weight: normal;");
+                        }
+                    }
+                };
+            }
+        });
     }
 }

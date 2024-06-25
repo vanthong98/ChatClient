@@ -24,7 +24,7 @@ public class ClientSocketOutputStreamHandler extends Thread {
 
             if (message == null) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

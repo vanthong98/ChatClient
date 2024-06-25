@@ -30,13 +30,13 @@ public class ClientSocketInputStreamHandler extends Thread {
                     Mediator.log("Socket disconnected");
                     Thread.sleep(500);
                     Mediator.log("Exiting...");
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                     Platform.exit();
                     break;
                 }
 
                 if (message.isEmpty()){
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                     continue;
                 }
 
