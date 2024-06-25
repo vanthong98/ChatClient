@@ -95,7 +95,7 @@ public class Mediator {
         }
         
         if (!isMyMessage && !currentReceiver.equals("group")){
-            Platform.runLater(() -> switchToGroupChatButton.setStyle("-fx-font-weight: normal;"));
+            Platform.runLater(() -> switchToGroupChatButton.setStyle("-fx-font-weight: bold;"));
         }
 
         groupMessages.add(m);
