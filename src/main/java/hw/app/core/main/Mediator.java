@@ -2,6 +2,7 @@ package hw.app.core.main;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -22,6 +23,7 @@ public class Mediator {
     public static ObservableList<Client> connectedClientNames;
     public static Label clientNameLabel;
     public static ListView<Client> clientListView;
+    public static Button switchToGroupChatButton;
     private static String _clientName;
 
     public static void log(String message) {
@@ -90,6 +92,10 @@ public class Mediator {
 
         if (isMyMessage){
             m = "**" + _clientName + "**"  + " [" + getCurrentTime()  + "]" + ":\n" + payload;
+        }
+        
+        if (!isMyMessage && !currentReceiver.equals("group")){
+            Platform.runLater(() -> switchToGroupChatButton.setStyle("-fx-font-weight: normal;"));
         }
 
         groupMessages.add(m);

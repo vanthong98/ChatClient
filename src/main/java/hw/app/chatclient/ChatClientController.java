@@ -39,6 +39,7 @@ public class ChatClientController {
         Mediator.messageTextArea = messageTextArea;
         Mediator.clientNameLabel = clientNameLabel;
         Mediator.clientListView = clientListView;
+        Mediator.switchToGroupChatButton = switchToGroupChatButton;
 
         var host = hostTextbox.getText();
         var port = portTextBox.getText();
@@ -95,6 +96,7 @@ public class ChatClientController {
             currentReceiverLabel.setText("GROUP CHAT");
             currentReceiverLabel.setTextFill(Paint.valueOf("#FF0000"));
             switchToGroupChatButton.setDisable(true);
+            switchToGroupChatButton.setStyle("-fx-font-weight: normal;");
         }
     }
 
